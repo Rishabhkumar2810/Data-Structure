@@ -6,30 +6,39 @@
  *     TreeNode *right;
  *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
  *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left),
+ * right(right) {}
  * };
  */
 class Solution {
 public:
-int c=1;
+   
     int countNodes(TreeNode* root) {
-       int a= count(root);
-        return a;
-    }
-    int count(TreeNode* root)
-    {
         if(root==NULL)
         return 0;
-        if(root->left!=NULL)
+        int lh=leftcount(root);
+        int rh=rightcount(root);
+        if(lh == rh)
+            return pow(2,rh)-1 ;
+
+        return 1 + countNodes(root->left)+countNodes(root->right);
+    }
+    int leftcount(TreeNode* root) {
+        int h=0;
+        while(root)
         {
-            count(root->left);
-            c+=1;
+            h++;
+            root=root->left;
         }
-        if(root->right!=NULL)
+        return h;
+    }
+     int rightcount(TreeNode* root) {
+        int h=0;
+        while(root)
         {
-            count(root->right);
-            c+=1;
+            h++;
+            root=root->right;
         }
-        return c;
+        return h;
     }
 };
